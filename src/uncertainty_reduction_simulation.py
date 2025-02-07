@@ -15,7 +15,7 @@ GREEDY_RADIUS = 10     # Radius within which the greedy algorithm chooses its ne
 selected_algorithm = "Greedy"  # Default algorithm selection
 step_index = 0                 # Current time step
 cbar = None                    # Global colorbar handle (will be created once)
- 
+
 # Randomize starting position (for all algorithms)
 np.random.seed()  # Or use a fixed seed, e.g. np.random.seed(42)
 initial_position = tuple(np.random.randint(0, GRID_SIZE[i]) for i in range(2))
@@ -30,7 +30,7 @@ greedy_results = []
 entropy_results = []
 gp_results = []
 
-# For GP-based selection: training points
+# For GP-based selection: training points (start with the same initial position)
 gp_selected_points = [initial_position]
 
 # ----------------------- Helper Functions -----------------------
@@ -131,7 +131,10 @@ def gp_based_selection(uncertainty, selected_points):
     return selected_index, updated, std_field
 
 # ----------------------- Precompute Results -----------------------
-# Initialize the Greedy algorithm at the random starting position.
+# For all three algorithms, force the same starting position.
+# Set the initial cell's uncertainty to 0 and record the starting point.
+
+# Greedy algorithm:
 uncertainty_greedy[initial_position] = 0.0
 greedy_results.append((initial_position, uncertainty_greedy.copy()))
 current_position = initial_position
@@ -140,15 +143,21 @@ for _ in range(NUM_STEPS - 1):
     greedy_results.append((g_point, uncertainty_greedy.copy()))
     current_position = g_point  # Update current position for the next step
 
-# Compute steps for Entropy-based and GP-based algorithms.
-for _ in range(NUM_STEPS):
+# Entropy-based algorithm:
+uncertainty_entropy[initial_position] = 0.0
+entropy_results.append((initial_position, uncertainty_entropy.copy()))
+for _ in range(NUM_STEPS - 1):
     e_point, uncertainty_entropy = entropy_based_selection(uncertainty_entropy)
     entropy_results.append((e_point, uncertainty_entropy.copy()))
-    
+
+# GP-based algorithm:
+uncertainty_gp[initial_position] = 0.0
+gp_results.append((initial_position, uncertainty_gp.copy()))
+for _ in range(NUM_STEPS - 1):
     gp_point, uncertainty_gp, std_field = gp_based_selection(uncertainty_gp, gp_selected_points)
     gp_selected_points.append(gp_point)
     gp_results.append((gp_point, uncertainty_gp.copy()))
-    # Note: GP predicted std field (std_field) is computed but not displayed.
+    # Note: The GP predicted std field (std_field) is computed but not displayed.
 
 # ----------------------- Plotting -----------------------
 # Create the main axes for the uncertainty map.
