@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "polygons",
+"features": [
+{ "type": "Feature", "properties": { "index": "convex" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 0.0, 0.0 ], [ 2.0, 0.0 ], [ 3.0, 1.0 ], [ 2.0, 2.0 ], [ 0.0, 2.0 ], [ -1.0, 1.0 ], [ 0.0, 0.0 ] ] ] } },
+{ "type": "Feature", "properties": { "index": "concave" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 0.0, 0.0 ], [ 4.0, 0.0 ], [ 4.0, 2.0 ], [ 2.0, 1.5 ], [ 2.0, 3.0 ], [ 0.0, 3.0 ], [ 0.0, 0.0 ] ] ] } },
+{ "type": "Feature", "properties": { "index": "with_hole" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 0.0, 0.0 ], [ 5.0, 0.0 ], [ 5.0, 5.0 ], [ 0.0, 5.0 ], [ 0.0, 0.0 ] ], [ [ 2.0, 2.0 ], [ 3.0, 2.0 ], [ 3.0, 3.0 ], [ 2.0, 3.0 ], [ 2.0, 2.0 ] ] ] } }
+]
+}
