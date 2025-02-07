@@ -173,7 +173,8 @@ def update_plot():
         point, uncertainty_map = greedy_results[step_index]
     
     # Display the uncertainty map using a colormap where 0 is white and 1 is black.
-    im = ax.imshow(uncertainty_map, cmap="gray_r", origin="upper")
+    # The fixed range is enforced by vmin=0 and vmax=1.
+    im = ax.imshow(uncertainty_map, cmap="gray_r", origin="upper", vmin=0, vmax=1)
     # Mark the selected point with a filled red circle.
     ax.scatter(point[1], point[0], color="red", marker="o", s=100)
     ax.set_title(f"{selected_algorithm} Selection - Step {step_index + 1}")
